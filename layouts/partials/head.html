@@ -63,9 +63,10 @@
 <!-- Structured Data -->
 {{- partial "schema.html" . -}}
 
-<!-- Preconnect -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<!-- Fonts (local) -->
+<link rel="stylesheet" href="{{ "css/fonts.css" | relURL }}">
+
+<!-- Tailwind CSS (local) -->
+<link rel="stylesheet" href="{{ "css/tailwind.css" | relURL }}">
 
 <link rel="stylesheet" href="{{ "css/style.css" | relURL }}">

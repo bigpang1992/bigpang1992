@@ -1,0 +1,20 @@
+{
+  "name": "bigpang1992",
+  "version": "1.0.0",
+  "description": "基于 Hugo 构建的赛博朋克风格个人博客 + 打赏系统，部署在 GitHub Pages 上。",
+  "main": "index.js",
+  "scripts": {
+    "build:css": "npx tailwindcss -i assets/css/tailwind-input.css -o static/css/tailwind.css --minify",
+    "watch:css": "npx tailwindcss -i assets/css/tailwind-input.css -o static/css/tailwind.css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.4.19"
+  },
+  "dependencies": {
+    "@fontsource/inter": "^5.2.8",
+    "@fontsource/jetbrains-mono": "^5.2.8"
+  }
+}

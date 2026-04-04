@@ -1,75 +1,73 @@
 {{ define "main" }}
 
-<section class="donate-page">
+<section class="relative min-h-screen overflow-hidden">
   <!-- Animated Background -->
-  <div class="donate-page-bg">
-    <canvas id="coin-rain-canvas"></canvas>
+  <div class="fixed inset-0 pointer-events-none z-0">
+    <canvas id="coin-rain-canvas" class="w-full h-full"></canvas>
   </div>
 
-  <div class="container">
+  <div class="relative z-10 max-w-[900px] mx-auto px-5 py-24">
     <!-- Hero -->
-    <div class="donate-hero" data-scroll-reveal>
-      <div class="donate-hero-emoji">🙏</div>
-      <h1 class="donate-hero-title">
-        <span class="glitch-text" data-text="赛博要饭站">赛博要饭站</span>
+    <div class="text-center pt-12 pb-10" data-scroll-reveal>
+      <div class="text-6xl mb-4 animate-float">🙏</div>
+      <h1 class="text-3xl md:text-5xl font-black mb-3">
+        <span class="glitch-text gradient-text" data-text="赛博要饭站">赛博要饭站</span>
       </h1>
-      <p class="donate-hero-subtitle">— 在数字世界的街头，我向您鞠躬 —</p>
+      <p class="text-slate-400">— 在数字世界的街头，我向您鞠躬 —</p>
     </div>
 
     <!-- Flattery Carousel -->
-    <div class="flattery-carousel glass-card" data-scroll-reveal>
-      <div class="flattery-icon">✨</div>
-      <p class="flattery-text" id="page-flattery">加载谄媚语句中...</p>
-      <div class="flattery-icon">✨</div>
+    <div class="rounded-2xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-xl px-6 py-4 flex items-center justify-center gap-3 mb-12" data-scroll-reveal>
+      <span class="text-neon-gold">✨</span>
+      <p class="text-sm text-slate-300" id="page-flattery">加载谄媚语句中...</p>
+      <span class="text-neon-gold">✨</span>
     </div>
 
     <!-- QR Codes -->
-    <div class="donate-qr-section" data-scroll-reveal>
-      <h2 class="section-title gradient-text">选择打赏方式</h2>
-      <div class="donate-methods">
-        <div class="donate-method glass-card">
-          <div class="method-header wechat">
-            <span class="method-icon">💚</span>
-            <h3>微信打赏</h3>
+    <div class="mb-16" data-scroll-reveal>
+      <h2 class="text-2xl font-black gradient-text text-center mb-8">选择打赏方式</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div class="rounded-2xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-xl overflow-hidden">
+          <div class="flex items-center gap-2 px-5 py-3 bg-green-500/[0.08] border-b border-white/[0.06]">
+            <span>💚</span>
+            <h3 class="text-white font-bold text-sm">微信打赏</h3>
           </div>
-          <div class="method-qr">
-            <div class="qr-frame">
-              <img src="{{ .Site.Params.donate.wechatQR }}" alt="微信收款码"
+          <div class="p-6 flex flex-col items-center">
+            <div class="w-48 h-48 rounded-xl bg-white p-2 mb-3">
+              <img src="{{ .Site.Params.donate.wechatQR }}" alt="微信收款码" class="w-full h-full object-contain"
                    onerror="this.src='{{ "images/qr-placeholder.svg" | relURL }}'">
             </div>
+            <p class="text-xs text-slate-500">打开微信扫一扫</p>
           </div>
-          <p class="method-tip">打开微信扫一扫</p>
         </div>
-        <div class="donate-method glass-card">
-          <div class="method-header alipay">
-            <span class="method-icon">💙</span>
-            <h3>支付宝打赏</h3>
+        <div class="rounded-2xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-xl overflow-hidden">
+          <div class="flex items-center gap-2 px-5 py-3 bg-blue-500/[0.08] border-b border-white/[0.06]">
+            <span>💙</span>
+            <h3 class="text-white font-bold text-sm">支付宝打赏</h3>
           </div>
-          <div class="method-qr">
-            <div class="qr-frame">
-              <img src="{{ .Site.Params.donate.alipayQR }}" alt="支付宝收款码"
+          <div class="p-6 flex flex-col items-center">
+            <div class="w-48 h-48 rounded-xl bg-white p-2 mb-3">
+              <img src="{{ .Site.Params.donate.alipayQR }}" alt="支付宝收款码" class="w-full h-full object-contain"
                    onerror="this.src='{{ "images/qr-placeholder.svg" | relURL }}'">
             </div>
+            <p class="text-xs text-slate-500">打开支付宝扫一扫</p>
           </div>
-          <p class="method-tip">打开支付宝扫一扫</p>
         </div>
       </div>
     </div>
 
     <!-- Gratitude Wall -->
-    <div class="gratitude-section" data-scroll-reveal>
-      <h2 class="section-title gradient-text">🏆 感恩墙</h2>
-      <p class="section-desc">感谢每一位慷慨的大佬，你们是最棒的！</p>
-      <div class="donors-grid">
+    <div class="mb-16" data-scroll-reveal>
+      <h2 class="text-2xl font-black gradient-text text-center mb-2">🏆 感恩墙</h2>
+      <p class="text-slate-500 text-sm text-center mb-8">感谢每一位慷慨的大佬，你们是最棒的！</p>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
         {{ range .Site.Params.donors }}
-        <div class="donor-card glass-card">
-          <div class="donor-avatar">{{ substr .name 0 1 }}</div>
-          <div class="donor-info">
-            <span class="donor-name">{{ .name }}</span>
-            <span class="donor-amount">{{ .amount }}</span>
-          </div>
+        <div class="rounded-xl bg-white/[0.03] border border-white/[0.08] p-4 text-center">
+          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-cyber to-neon-violet flex items-center justify-center text-white font-bold text-sm mx-auto mb-2">{{ substr .name 0 1 }}</div>
+          <span class="block text-sm text-white font-semibold">{{ .name }}</span>
+          <span class="block text-xs text-neon-gold">{{ .amount }}</span>
           {{ with .message }}
-          <p class="donor-message">"{{ . }}"</p>
+          <p class="text-[11px] text-slate-500 mt-1 italic">"{{ . }}"</p>
           {{ end }}
         </div>
         {{ end }}
@@ -77,28 +75,28 @@
     </div>
 
     <!-- FAQ -->
-    <div class="donate-faq" data-scroll-reveal>
-      <h2 class="section-title gradient-text">❓ 常见问题</h2>
-      <div class="faq-list">
-        <div class="faq-item glass-card">
-          <h4>打赏的钱用来干什么？</h4>
-          <p>用于支付服务器费用、域名续费、购买学习资料，以及维持本赛博乞丐的基本生存需求（泡面和咖啡）。</p>
+    <div class="mb-16" data-scroll-reveal>
+      <h2 class="text-2xl font-black gradient-text text-center mb-8">❓ 常见问题</h2>
+      <div class="space-y-4">
+        <div class="rounded-2xl bg-white/[0.03] border border-white/[0.08] p-5">
+          <h4 class="text-white font-bold text-sm mb-2">打赏的钱用来干什么？</h4>
+          <p class="text-sm text-slate-400 leading-relaxed">用于支付服务器费用、域名续费、购买学习资料，以及维持本赛博乞丐的基本生存需求（泡面和咖啡）。</p>
         </div>
-        <div class="faq-item glass-card">
-          <h4>打赏后能获得什么？</h4>
-          <p>您将获得：① 本人发自灵魂深处的感恩 ② 感恩墙上的永久展示位 ③ 宇宙中最真诚的祝福 ④ 更多优质内容</p>
+        <div class="rounded-2xl bg-white/[0.03] border border-white/[0.08] p-5">
+          <h4 class="text-white font-bold text-sm mb-2">打赏后能获得什么？</h4>
+          <p class="text-sm text-slate-400 leading-relaxed">您将获得：① 本人发自灵魂深处的感恩 ② 感恩墙上的永久展示位 ③ 宇宙中最真诚的祝福 ④ 更多优质内容</p>
         </div>
-        <div class="faq-item glass-card">
-          <h4>可以退款吗？</h4>
-          <p>打赏为自愿行为，一经打出恕不退回（已化作泡面和咖啡被消化了...）。理性打赏，量力而行 🙏</p>
+        <div class="rounded-2xl bg-white/[0.03] border border-white/[0.08] p-5">
+          <h4 class="text-white font-bold text-sm mb-2">可以退款吗？</h4>
+          <p class="text-sm text-slate-400 leading-relaxed">打赏为自愿行为，一经打出恕不退回（已化作泡面和咖啡被消化了...）。理性打赏，量力而行 🙏</p>
         </div>
       </div>
     </div>
 
     <!-- Final CTA -->
-    <div class="donate-final-cta" data-scroll-reveal>
-      <p class="final-text">— 无论是否打赏，感谢您的阅读，祝您生活愉快 —</p>
-      <div class="final-emoji">❤️</div>
+    <div class="text-center py-8" data-scroll-reveal>
+      <p class="text-slate-500 text-sm">— 无论是否打赏，感谢您的阅读，祝您生活愉快 —</p>
+      <div class="text-3xl mt-3">❤️</div>
     </div>
   </div>
 </section>

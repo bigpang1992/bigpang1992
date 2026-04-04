@@ -31,6 +31,14 @@ jobs:
         with:
           submodules: recursive
           fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install dependencies & build Tailwind CSS
+        run: |
+          npm ci
+          npm run build:css
       - name: Build with Hugo
         env:
           HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache

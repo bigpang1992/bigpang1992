@@ -3,6 +3,12 @@ public/
 resources/
 .hugo_build.lock
 
+# Node
+node_modules/
+
+# Tailwind build input
+assets/css/
+
 # OS
 .DS_Store
 Thumbs.db

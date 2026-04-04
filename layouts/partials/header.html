@@ -1,23 +1,36 @@
-<header class="site-header" id="site-header">
-  <nav class="nav-container">
-    <a href="{{ "/" | relURL }}" class="nav-logo">
-      <img src="{{ "images/logo.png" | relURL }}" alt="{{ .Site.Title }}" class="nav-logo-img">
+<header class="fixed top-0 left-0 right-0 z-[1000] bg-dark/80 backdrop-blur-xl border-b border-white/[0.06] transition-all duration-300" id="site-header">
+  <nav class="max-w-[1200px] mx-auto px-5 h-16 flex items-center justify-between">
+    <a href="{{ "/" | relURL }}" class="flex items-center gap-2 relative z-10">
+      <img src="{{ "images/logo.png" | relURL }}" alt="{{ .Site.Title }}" class="h-8 w-auto">
     </a>
 
-    <ul class="nav-menu" id="nav-menu">
+    <ul class="hidden md:flex items-center gap-1" id="nav-menu">
       {{ range .Site.Menus.main }}
-      <li class="nav-item">
-        <a href="{{ .URL | relURL }}" class="nav-link {{ if $.IsMenuCurrent "main" . }}active{{ end }}">
+      <li>
+        <a href="{{ .URL | relURL }}" class="px-4 py-2 rounded-full text-sm font-medium text-slate-400 hover:text-cyber hover:bg-cyber/5 transition-all duration-200 {{ if $.IsMenuCurrent "main" . }}text-cyber bg-cyber/10{{ end }}">
           {{ .Name }}
         </a>
       </li>
       {{ end }}
     </ul>
 
-    <button class="nav-toggle" id="nav-toggle" aria-label="菜单">
+    <button class="flex md:hidden flex-col gap-[5px] p-2 relative z-10" id="nav-toggle" aria-label="菜单">
       <span></span>
       <span></span>
       <span></span>
     </button>
   </nav>
+
+  <!-- Mobile menu -->
+  <div class="md:hidden fixed top-16 left-0 right-0 bg-dark/[0.98] backdrop-blur-2xl border-b border-white/[0.06] transform -translate-y-full opacity-0 transition-all duration-300 pointer-events-none" id="mobile-menu">
+    <ul class="p-4 flex flex-col gap-1">
+      {{ range .Site.Menus.main }}
+      <li>
+        <a href="{{ .URL | relURL }}" class="block px-4 py-3 rounded-xl text-base text-slate-400 hover:text-cyber hover:bg-cyber/5 transition-all {{ if $.IsMenuCurrent "main" . }}text-cyber bg-cyber/10{{ end }}">
+          {{ .Name }}
+        </a>
+      </li>
+      {{ end }}
+    </ul>
+  </div>
 </header>

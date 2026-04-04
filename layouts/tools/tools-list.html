@@ -1,36 +1,36 @@
 {{ define "main" }}
 
 <!-- Page Header -->
-<section class="page-header">
-  <div class="page-header-bg"></div>
-  <div class="container">
-    <div class="page-header-content">
-      <h1 class="page-title gradient-text">{{ .Title }}</h1>
-      <p class="page-desc">{{ .Description }}</p>
-    </div>
+<section class="relative pt-28 pb-16 overflow-hidden">
+  <div class="absolute inset-0 bg-gradient-to-b from-cyber/[0.03] to-transparent"></div>
+  <div class="relative max-w-[1200px] mx-auto px-5 text-center">
+    <h1 class="text-3xl md:text-4xl font-black gradient-text mb-3">{{ .Title }}</h1>
+    <p class="text-slate-400">{{ .Description }}</p>
   </div>
 </section>
 
-<section class="section">
-  <div class="container">
-    <div class="tools-grid">
+<section class="pb-20 relative z-10">
+  <div class="max-w-[1200px] mx-auto px-5">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
       {{ range .Pages }}
-      <a href="{{ .RelPermalink }}" class="tool-card glass-card" data-scroll-reveal>
-        <div class="tool-card-icon">{{ .Params.icon | default "🔧" }}</div>
-        <div class="tool-card-body">
-          <h3 class="tool-card-title">{{ .Title }}</h3>
-          <p class="tool-card-desc">{{ .Description }}</p>
+      <a href="{{ .RelPermalink }}" class="group relative flex items-center gap-4 rounded-2xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-xl p-5 hover:border-cyber/30 hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(0,212,255,0.08)] transition-all duration-300" data-scroll-reveal>
+        <div class="shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-cyber/20 to-neon-violet/20 flex items-center justify-center text-2xl">{{ .Params.icon | default "🔧" }}</div>
+        <div class="flex-1 min-w-0">
+          <h3 class="text-white font-bold text-sm mb-0.5 group-hover:text-cyber transition-colors">{{ .Title }}</h3>
+          <p class="text-xs text-slate-500 truncate">{{ .Description }}</p>
         </div>
-        <div class="tool-card-category">{{ .Params.toolCategory | default "工具" }}</div>
-        <div class="tool-card-arrow">→</div>
+        <div class="shrink-0">
+          <span class="text-[10px] px-2 py-0.5 rounded-full bg-white/5 text-slate-500 whitespace-nowrap">{{ .Params.toolCategory | default "工具" }}</span>
+        </div>
+        <span class="shrink-0 text-slate-600 group-hover:text-cyber group-hover:translate-x-1 transition-all">→</span>
       </a>
       {{ end }}
     </div>
 
     {{ if eq (len .Pages) 0 }}
-    <div class="tools-empty" data-scroll-reveal>
-      <span class="tools-empty-icon">🚧</span>
-      <p>工具正在开发中，敬请期待...</p>
+    <div class="text-center py-20" data-scroll-reveal>
+      <span class="text-5xl block mb-4">🚧</span>
+      <p class="text-slate-400">工具正在开发中，敬请期待...</p>
     </div>
     {{ end }}
   </div>
