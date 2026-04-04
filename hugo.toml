@@ -1,6 +1,6 @@
 baseURL = "/"
 languageCode = "zh-CN"
-title = "穷逼"
+title = "穷Hub"
 paginate = 9
 enableEmoji = true
 enableRobotsTXT = true
