@@ -1,0 +1,114 @@
+{{ define "main" }}
+
+<!-- Hero Section -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-badge">🏴‍☠️ CYBER BEGGAR HQ</div>
+    <h1 class="hero-title">
+      <span class="hero-title-line glitch-text" data-text="赛博要饭总部">赛博要饭总部</span>
+    </h1>
+    <div class="hero-typing">
+      <span id="typing-text"></span><span class="typing-cursor">|</span>
+    </div>
+    <p class="hero-desc">在互联网的荒野里流浪 · 用文字换取赛博世界的面包</p>
+    <div class="hero-actions">
+      <a href="{{ "posts/" | relURL }}" class="btn btn-primary btn-glow">
+        <span>📝 开始阅读</span>
+      </a>
+      <button class="btn btn-secondary btn-donate-trigger">
+        <span>💰 投喂一下</span>
+      </button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-number" id="stat-posts">{{ len (where .Site.RegularPages "Section" "posts") }}</span>
+        <span class="stat-label">篇文章</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" id="stat-categories">{{ len .Site.Taxonomies.categories }}</span>
+        <span class="stat-label">个分类</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" id="stat-tags">{{ len .Site.Taxonomies.tags }}</span>
+        <span class="stat-label">个标签</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll-indicator">
+    <span>向下滚动</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- Latest Articles -->
+<section class="section articles-section" id="articles">
+  <div class="container">
+    <div class="section-header" data-scroll-reveal>
+      <span class="section-badge">📝 LATEST</span>
+      <h2 class="section-title gradient-text">最新文章</h2>
+      <p class="section-desc">分享技术、生活与一切有趣的事</p>
+    </div>
+    <div class="articles-grid">
+      {{ range first 6 (where .Site.RegularPages "Section" "posts") }}
+        {{ partial "article-card.html" . }}
+      {{ end }}
+    </div>
+    {{ if gt (len (where .Site.RegularPages "Section" "posts")) 6 }}
+    <div class="section-more" data-scroll-reveal>
+      <a href="{{ "posts/" | relURL }}" class="btn btn-outline">查看全部文章 →</a>
+    </div>
+    {{ end }}
+  </div>
+</section>
+
+<!-- Categories -->
+<section class="section categories-section">
+  <div class="container">
+    <div class="section-header" data-scroll-reveal>
+      <span class="section-badge">📂 CATEGORIES</span>
+      <h2 class="section-title gradient-text">文章分类</h2>
+      <p class="section-desc">按主题浏览内容</p>
+    </div>
+    <div class="categories-grid" data-scroll-reveal>
+      {{ range .Site.Taxonomies.categories }}
+      <a href="{{ .Page.RelPermalink }}" class="category-card glass-card">
+        <span class="category-icon">
+          {{ if eq .Page.Title "技术分享" }}💻
+          {{ else if eq .Page.Title "生活随笔" }}🌟
+          {{ else if eq .Page.Title "干货推荐" }}🔥
+          {{ else if eq .Page.Title "赛博杂谈" }}🤖
+          {{ else }}📁{{ end }}
+        </span>
+        <h3 class="category-name">{{ .Page.Title }}</h3>
+        <span class="category-count">{{ .Count }} 篇</span>
+      </a>
+      {{ end }}
+    </div>
+  </div>
+</section>
+
+<!-- Donation CTA -->
+<section class="section donate-section">
+  <div class="container">
+    <div class="donate-cta-card" data-scroll-reveal>
+      <div class="donate-cta-bg"></div>
+      <div class="donate-cta-content">
+        <span class="donate-cta-emoji">🙏</span>
+        <h2>觉得内容还不错？</h2>
+        <p>这个赛博乞丐靠您的打赏续命写作<br>您的每一份支持都是我创作的最大动力</p>
+        <button class="btn btn-donate btn-glow btn-donate-trigger">
+          💰 打赏支持
+        </button>
+        <div class="donate-cta-flattery" id="home-flattery">
+          <p class="flattery-text">打赏的都是世上最帅最美的人！</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Ad Spot -->
+{{ partial "ad-spot.html" (dict "Site" .Site "position" "homepage-bottom") }}
+
+{{ end }}

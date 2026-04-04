@@ -1,0 +1,106 @@
+{{ define "main" }}
+
+<section class="donate-page">
+  <!-- Animated Background -->
+  <div class="donate-page-bg">
+    <canvas id="coin-rain-canvas"></canvas>
+  </div>
+
+  <div class="container">
+    <!-- Hero -->
+    <div class="donate-hero" data-scroll-reveal>
+      <div class="donate-hero-emoji">🙏</div>
+      <h1 class="donate-hero-title">
+        <span class="glitch-text" data-text="赛博要饭站">赛博要饭站</span>
+      </h1>
+      <p class="donate-hero-subtitle">— 在数字世界的街头，我向您鞠躬 —</p>
+    </div>
+
+    <!-- Flattery Carousel -->
+    <div class="flattery-carousel glass-card" data-scroll-reveal>
+      <div class="flattery-icon">✨</div>
+      <p class="flattery-text" id="page-flattery">加载谄媚语句中...</p>
+      <div class="flattery-icon">✨</div>
+    </div>
+
+    <!-- QR Codes -->
+    <div class="donate-qr-section" data-scroll-reveal>
+      <h2 class="section-title gradient-text">选择打赏方式</h2>
+      <div class="donate-methods">
+        <div class="donate-method glass-card">
+          <div class="method-header wechat">
+            <span class="method-icon">💚</span>
+            <h3>微信打赏</h3>
+          </div>
+          <div class="method-qr">
+            <div class="qr-frame">
+              <img src="{{ .Site.Params.donate.wechatQR }}" alt="微信收款码"
+                   onerror="this.src='{{ "images/qr-placeholder.svg" | relURL }}'">
+            </div>
+          </div>
+          <p class="method-tip">打开微信扫一扫</p>
+        </div>
+        <div class="donate-method glass-card">
+          <div class="method-header alipay">
+            <span class="method-icon">💙</span>
+            <h3>支付宝打赏</h3>
+          </div>
+          <div class="method-qr">
+            <div class="qr-frame">
+              <img src="{{ .Site.Params.donate.alipayQR }}" alt="支付宝收款码"
+                   onerror="this.src='{{ "images/qr-placeholder.svg" | relURL }}'">
+            </div>
+          </div>
+          <p class="method-tip">打开支付宝扫一扫</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gratitude Wall -->
+    <div class="gratitude-section" data-scroll-reveal>
+      <h2 class="section-title gradient-text">🏆 感恩墙</h2>
+      <p class="section-desc">感谢每一位慷慨的大佬，你们是最棒的！</p>
+      <div class="donors-grid">
+        {{ range .Site.Params.donors }}
+        <div class="donor-card glass-card">
+          <div class="donor-avatar">{{ substr .name 0 1 }}</div>
+          <div class="donor-info">
+            <span class="donor-name">{{ .name }}</span>
+            <span class="donor-amount">{{ .amount }}</span>
+          </div>
+          {{ with .message }}
+          <p class="donor-message">"{{ . }}"</p>
+          {{ end }}
+        </div>
+        {{ end }}
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="donate-faq" data-scroll-reveal>
+      <h2 class="section-title gradient-text">❓ 常见问题</h2>
+      <div class="faq-list">
+        <div class="faq-item glass-card">
+          <h4>打赏的钱用来干什么？</h4>
+          <p>用于支付服务器费用、域名续费、购买学习资料，以及维持本赛博乞丐的基本生存需求（泡面和咖啡）。</p>
+        </div>
+        <div class="faq-item glass-card">
+          <h4>打赏后能获得什么？</h4>
+          <p>您将获得：① 本人发自灵魂深处的感恩 ② 感恩墙上的永久展示位 ③ 宇宙中最真诚的祝福 ④ 更多优质内容</p>
+        </div>
+        <div class="faq-item glass-card">
+          <h4>可以退款吗？</h4>
+          <p>打赏为自愿行为，一经打出恕不退回（已化作泡面和咖啡被消化了...）。理性打赏，量力而行 🙏</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Final CTA -->
+    <div class="donate-final-cta" data-scroll-reveal>
+      <p class="final-text">— 无论是否打赏，感谢您的阅读，祝您生活愉快 —</p>
+      <div class="final-emoji">❤️</div>
+    </div>
+  </div>
+</section>
+
+{{ end }}

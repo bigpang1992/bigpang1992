@@ -1,0 +1,56 @@
+<!-- Floating Donate Button -->
+<button class="donate-float-btn btn-donate-trigger" id="donate-float-btn" aria-label="打赏">
+  <span class="donate-float-icon">💰</span>
+  <span class="donate-float-pulse"></span>
+</button>
+
+<!-- Donate Modal -->
+<div class="donate-modal" id="donate-modal">
+  <div class="donate-modal-overlay"></div>
+  <div class="donate-modal-content">
+    <button class="donate-modal-close" id="donate-modal-close">&times;</button>
+
+    <div class="donate-modal-header">
+      <h2>{{ .Site.Params.donate.title }}</h2>
+      <p class="donate-modal-subtitle">{{ .Site.Params.donate.subtitle }}</p>
+    </div>
+
+    <div class="donate-modal-flattery" id="donate-flattery">
+      <p class="flattery-text">您的慷慨让世界更美好！✨</p>
+    </div>
+
+    <div class="donate-modal-tabs">
+      <button class="donate-tab active" data-tab="wechat">
+        <span class="tab-icon">💚</span> 微信
+      </button>
+      <button class="donate-tab" data-tab="alipay">
+        <span class="tab-icon">💙</span> 支付宝
+      </button>
+    </div>
+
+    <div class="donate-modal-qr">
+      <div class="qr-container" id="qr-wechat">
+        <img src="{{ .Site.Params.donate.wechatQR }}" alt="微信打赏二维码"
+             onerror="this.parentElement.innerHTML='<div class=qr-placeholder>请在 hugo.toml 中配置<br>微信收款码图片路径</div>'">
+      </div>
+      <div class="qr-container" id="qr-alipay" style="display:none">
+        <img src="{{ .Site.Params.donate.alipayQR }}" alt="支付宝打赏二维码"
+             onerror="this.parentElement.innerHTML='<div class=qr-placeholder>请在 hugo.toml 中配置<br>支付宝收款码图片路径</div>'">
+      </div>
+    </div>
+
+    <p class="donate-modal-tip">扫描二维码，向赛博乞丐投喂 🙏</p>
+
+    <!-- Confetti canvas -->
+    <canvas id="confetti-canvas" class="confetti-canvas"></canvas>
+  </div>
+</div>
+
+<script>
+// Flattery messages from Hugo config
+window.FLATTERY_MESSAGES = [
+  {{ range .Site.Params.donate.messages }}
+  {{ . | jsonify }},
+  {{ end }}
+];
+</script>

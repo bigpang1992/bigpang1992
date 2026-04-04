@@ -1,0 +1,77 @@
+{{ define "main" }}
+
+<!-- Page Header -->
+<section class="page-header">
+  <div class="page-header-bg"></div>
+  <div class="container">
+    <div class="page-header-content">
+      <h1 class="page-title gradient-text">{{ .Title }}</h1>
+      {{ with .Description }}
+      <p class="page-desc">{{ . }}</p>
+      {{ end }}
+      {{ if .IsSection }}
+      <span class="page-count">共 {{ len .Pages }} 篇文章</span>
+      {{ end }}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="list-layout">
+      <div class="list-main">
+        <div class="articles-grid">
+          {{ range .Paginator.Pages }}
+            {{ partial "article-card.html" . }}
+          {{ end }}
+        </div>
+
+        <!-- Pagination -->
+        {{ if gt .Paginator.TotalPages 1 }}
+        <nav class="pagination" data-scroll-reveal>
+          {{ if .Paginator.HasPrev }}
+          <a href="{{ .Paginator.Prev.URL }}" class="btn btn-outline">← 上一页</a>
+          {{ end }}
+          <span class="pagination-info">{{ .Paginator.PageNumber }} / {{ .Paginator.TotalPages }}</span>
+          {{ if .Paginator.HasNext }}
+          <a href="{{ .Paginator.Next.URL }}" class="btn btn-outline">下一页 →</a>
+          {{ end }}
+        </nav>
+        {{ end }}
+      </div>
+
+      <aside class="list-sidebar">
+        {{ partial "ad-spot.html" (dict "Site" .Site "position" "sidebar") }}
+
+        {{ if .Site.Taxonomies.categories }}
+        <div class="widget glass-card" data-scroll-reveal>
+          <h4 class="widget-title">📂 文章分类</h4>
+          <ul class="widget-list">
+            {{ range .Site.Taxonomies.categories }}
+            <li>
+              <a href="{{ .Page.RelPermalink }}">
+                <span>{{ .Page.Title }}</span>
+                <span class="badge">{{ .Count }}</span>
+              </a>
+            </li>
+            {{ end }}
+          </ul>
+        </div>
+        {{ end }}
+
+        {{ if .Site.Taxonomies.tags }}
+        <div class="widget glass-card" data-scroll-reveal>
+          <h4 class="widget-title">🏷️ 标签云</h4>
+          <div class="tag-cloud">
+            {{ range .Site.Taxonomies.tags }}
+            <a href="{{ .Page.RelPermalink }}" class="tag">{{ .Page.Title }} ({{ .Count }})</a>
+            {{ end }}
+          </div>
+        </div>
+        {{ end }}
+      </aside>
+    </div>
+  </div>
+</section>
+
+{{ end }}

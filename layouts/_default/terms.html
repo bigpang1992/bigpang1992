@@ -1,0 +1,29 @@
+{{ define "main" }}
+
+<section class="page-header">
+  <div class="page-header-bg"></div>
+  <div class="container">
+    <div class="page-header-content">
+      <h1 class="page-title gradient-text">{{ .Title }}</h1>
+      <p class="page-desc">共 {{ len .Data.Terms }} 个{{ if eq .Data.Plural "categories" }}分类{{ else }}标签{{ end }}</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="terms-grid">
+      {{ range .Data.Terms.Alphabetical }}
+      <a href="{{ .Page.RelPermalink }}" class="term-card glass-card" data-scroll-reveal>
+        <div class="term-card-inner">
+          <h3 class="term-name">{{ .Page.Title }}</h3>
+          <span class="term-count">{{ .Count }} 篇文章</span>
+        </div>
+        <div class="term-card-glow"></div>
+      </a>
+      {{ end }}
+    </div>
+  </div>
+</section>
+
+{{ end }}

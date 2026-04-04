@@ -1,0 +1,102 @@
+baseURL = "/"
+languageCode = "zh-CN"
+title = "赛博要饭总部"
+paginate = 9
+enableEmoji = true
+enableRobotsTXT = true
+summaryLength = 80
+
+[markup]
+  [markup.highlight]
+    style = "dracula"
+    lineNos = true
+    guessSyntax = true
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 4
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+
+[outputs]
+  home = ["HTML", "RSS"]
+  section = ["HTML", "RSS"]
+
+[sitemap]
+  changeFreq = "weekly"
+  priority = 0.5
+
+[params]
+  description = "一个在互联网荒野流浪的数字乞丐的个人主页 | 技术分享 · 生活感悟 · 赛博要饭"
+  author = "BigPang"
+  avatar = "/medias/avatars/avatar.jpg"
+  keywords = ["博客", "技术", "赛博要饭", "打赏"]
+  defaultCover = "/images/default-cover.svg"
+  beian = ""
+
+  [params.donate]
+    enabled = true
+    wechatQR = "/medias/reward/wechat.png"
+    alipayQR = "/medias/reward/alipay.png"
+    title = "🙏 投喂赛博乞丐"
+    subtitle = "如果我的内容让你会心一笑，请考虑打赏一下~"
+    messages = [
+      "天哪！您简直是世间最慷慨最帅气最美丽的人！",
+      "遇到您这样的好人，我感动得在屏幕前热泪盈眶！",
+      "您的打赏让这个赛博乞丐看到了活下去的希望！",
+      "天使大人！您的光芒照亮了我灰暗的代码人生！",
+      "您的每一分钱都会化作我肝文章到凌晨三点的无穷动力！",
+      "给大佬磕一个！您是我二十多年来见过最好看的人！",
+      "打赏的都是人中龙凤、万中无一的绝世好人，说的就是您！",
+      "您的慷慨让我相信这个冰冷的互联网还有一丝温暖！",
+      "妈妈问我为什么跪着打字，因为大佬您打赏了啊！",
+      "您的打赏价值连城，我会把您供在心里最尊贵的位置！",
+    ]
+
+  [params.ad]
+    enabled = true
+    sidebarTitle = "💎 广告位招租"
+    sidebarDesc = "这个位置可以是您的广告，联系站长了解详情"
+    articleTopTitle = "📢 推广"
+    articleBottomTitle = "📢 推广"
+
+  [[params.social]]
+    name = "GitHub"
+    url = "https://github.com/bigpang1992"
+    icon = "github"
+
+  [[params.social]]
+    name = "邮箱"
+    url = "mailto:291601203@qq.com"
+    icon = "mail"
+
+  [[params.donors]]
+    name = "虚位以待"
+    amount = "成为第一位打赏者"
+    message = "期待您的名字出现在这里..."
+
+[menu]
+  [[menu.main]]
+    name = "🏠 首页"
+    url = "/"
+    weight = 1
+  [[menu.main]]
+    name = "📝 文章"
+    url = "/posts/"
+    weight = 2
+  [[menu.main]]
+    name = "📂 分类"
+    url = "/categories/"
+    weight = 3
+  [[menu.main]]
+    name = "💰 打赏"
+    url = "/donate/"
+    weight = 4
+  [[menu.main]]
+    name = "👤 关于"
+    url = "/about/"
+    weight = 5

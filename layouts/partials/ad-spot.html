@@ -1,0 +1,18 @@
+{{ if .Site.Params.ad.enabled }}
+<div class="ad-spot ad-{{ .position | default "default" }}">
+  <div class="ad-content glass-card">
+    <div class="ad-badge">
+      {{ if eq .position "sidebar" }}{{ .Site.Params.ad.sidebarTitle }}
+      {{ else if eq .position "article-top" }}{{ .Site.Params.ad.articleTopTitle }}
+      {{ else if eq .position "article-bottom" }}{{ .Site.Params.ad.articleBottomTitle }}
+      {{ else }}📢 广告{{ end }}
+    </div>
+    <div class="ad-placeholder">
+      <div class="ad-placeholder-inner">
+        <span class="ad-icon">📢</span>
+        <p>{{ if eq .position "sidebar" }}{{ .Site.Params.ad.sidebarDesc }}{{ else }}广告位虚位以待，联系站长投放{{ end }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+{{ end }}

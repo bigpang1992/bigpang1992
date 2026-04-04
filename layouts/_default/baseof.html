@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  {{- partial "head.html" . -}}
+</head>
+<body>
+  <!-- Loading Screen -->
+  <div id="loading-screen" class="loading-screen">
+    <div class="loader">
+      <div class="loader-icon">🏴‍☠️</div>
+      <div class="loader-text">赛博要饭总部</div>
+      <div class="loader-bar"><div class="loader-progress"></div></div>
+    </div>
+  </div>
+
+  <!-- Particle Background -->
+  <canvas id="particles-canvas"></canvas>
+
+  {{- partial "header.html" . -}}
+
+  <main class="main-content">
+    {{- block "main" . }}{{- end }}
+  </main>
+
+  {{- partial "footer.html" . -}}
+
+  {{- if .Site.Params.donate.enabled }}
+    {{- partial "donate-widget.html" . -}}
+  {{- end }}
+
+  <!-- Back to Top -->
+  <button id="back-to-top" class="back-to-top" aria-label="回到顶部">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
+
+  <script src="{{ "js/particles.js" | relURL }}"></script>
+  <script src="{{ "js/main.js" | relURL }}"></script>
+</body>
+</html>

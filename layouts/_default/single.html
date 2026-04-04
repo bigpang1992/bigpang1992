@@ -1,0 +1,93 @@
+{{ define "main" }}
+
+<!-- Post Header -->
+<section class="post-header">
+  <div class="post-header-bg" {{ with .Params.cover }}style="background-image: url('{{ . }}')"{{ end }}>
+    <div class="post-header-overlay">
+      <div class="container">
+        <div class="post-header-content">
+          <div class="post-categories">
+            {{ range .Params.categories }}
+            <a href="{{ "categories/" | relURL }}{{ . | urlize }}/" class="post-category-badge">{{ . }}</a>
+            {{ end }}
+          </div>
+          <h1 class="post-title">{{ .Title }}</h1>
+          <div class="post-meta-bar">
+            <span class="post-meta-item">📅 {{ .Date.Format "2006年01月02日" }}</span>
+            <span class="post-meta-item">⏱ {{ .ReadingTime }} 分钟阅读</span>
+            {{ with .Params.tags }}
+            <span class="post-meta-item">🏷️ {{ delimit . ", " }}</span>
+            {{ end }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section post-section">
+  <div class="container">
+    <div class="post-layout">
+      <!-- Main Content -->
+      <article class="post-content-wrap">
+        {{ partial "ad-spot.html" (dict "Site" .Site "position" "article-top") }}
+
+        <div class="post-content markdown-body">
+          {{ .Content }}
+        </div>
+
+        {{ partial "ad-spot.html" (dict "Site" .Site "position" "article-bottom") }}
+
+        <!-- Post Donate CTA -->
+        <div class="post-donate-cta glass-card" data-scroll-reveal>
+          <div class="post-donate-emoji">🙏</div>
+          <h3>喜欢这篇文章？</h3>
+          <p class="post-donate-flattery" id="post-flattery">您的打赏是我最大的动力！</p>
+          <button class="btn btn-donate btn-glow btn-donate-trigger">💰 打赏作者</button>
+        </div>
+
+        <!-- Tags -->
+        {{ with .Params.tags }}
+        <div class="post-tags" data-scroll-reveal>
+          <span class="tags-label">🏷️ 标签：</span>
+          {{ range . }}
+          <a href="{{ "tags/" | relURL }}{{ . | urlize }}/" class="tag">#{{ . }}</a>
+          {{ end }}
+        </div>
+        {{ end }}
+
+        <!-- Prev/Next -->
+        <nav class="post-nav" data-scroll-reveal>
+          {{ with .PrevInSection }}
+          <a href="{{ .RelPermalink }}" class="post-nav-item post-nav-prev glass-card">
+            <span class="post-nav-label">← 上一篇</span>
+            <span class="post-nav-title">{{ .Title }}</span>
+          </a>
+          {{ end }}
+          {{ with .NextInSection }}
+          <a href="{{ .RelPermalink }}" class="post-nav-item post-nav-next glass-card">
+            <span class="post-nav-label">下一篇 →</span>
+            <span class="post-nav-title">{{ .Title }}</span>
+          </a>
+          {{ end }}
+        </nav>
+      </article>
+
+      <!-- Sidebar -->
+      <aside class="post-sidebar">
+        {{ if .TableOfContents }}
+        <div class="widget toc-widget glass-card sticky-widget">
+          <h4 class="widget-title">📑 目录</h4>
+          <div class="toc-content">
+            {{ .TableOfContents }}
+          </div>
+        </div>
+        {{ end }}
+
+        {{ partial "ad-spot.html" (dict "Site" .Site "position" "sidebar") }}
+      </aside>
+    </div>
+  </div>
+</section>
+
+{{ end }}
