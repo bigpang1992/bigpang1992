@@ -1,9 +1,10 @@
-baseURL = "/"
+baseURL = "https://bigpang1992.github.io/"
 languageCode = "zh-CN"
 title = "穷Hub"
 paginate = 9
 enableEmoji = true
 enableRobotsTXT = true
+buildFuture = true
 summaryLength = 80
 
 [markup]
@@ -23,12 +24,29 @@ summaryLength = 80
   tag = "tags"
 
 [outputs]
-  home = ["HTML", "RSS"]
+  home = ["HTML", "RSS", "JSON"]
   section = ["HTML", "RSS"]
+  taxonomy = ["HTML", "RSS"]
+  term = ["HTML", "RSS"]
 
 [sitemap]
   changeFreq = "weekly"
   priority = 0.5
+  filename = "sitemap.xml"
+
+[related]
+  includeNewer = true
+  threshold = 80
+  toLower = true
+  [[related.indices]]
+    name = "categories"
+    weight = 100
+  [[related.indices]]
+    name = "tags"
+    weight = 80
+  [[related.indices]]
+    name = "date"
+    weight = 10
 
 [params]
   description = "一个在互联网荒野流浪的数字乞丐的个人主页 | 技术分享 · 生活感悟 · 赛博要饭"

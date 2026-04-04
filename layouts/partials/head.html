@@ -1,29 +1,71 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
-<meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
-<meta name="keywords" content="{{ delimit .Site.Params.keywords ", " }}">
+<title>{{ if .IsHome }}{{ .Site.Title }} - {{ .Site.Params.description }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
+
+{{- $description := .Site.Params.description -}}
+{{- with .Description }}{{ $description = . }}{{ end -}}
+{{- with .Params.description }}{{ $description = . }}{{ end -}}
+<meta name="description" content="{{ $description }}">
+
+{{- $keywords := delimit .Site.Params.keywords ", " -}}
+{{- with .Params.tags }}{{ $keywords = delimit . ", " }}{{ end -}}
+<meta name="keywords" content="{{ $keywords }}">
 <meta name="author" content="{{ .Site.Params.author }}">
 <link rel="icon" href="{{ "favicon.png" | relURL }}" type="image/png">
 
+<!-- Canonical URL -->
+<link rel="canonical" href="{{ .Permalink }}">
+
+<!-- Robots -->
+{{- if .Params.noindex }}
+<meta name="robots" content="noindex, nofollow">
+{{- else }}
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+{{- end }}
+
 <!-- Open Graph -->
+<meta property="og:site_name" content="{{ .Site.Title }}">
 <meta property="og:title" content="{{ .Title }}">
-<meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+<meta property="og:description" content="{{ $description }}">
 <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
 <meta property="og:url" content="{{ .Permalink }}">
-{{ with .Params.cover }}<meta property="og:image" content="{{ . | absURL }}">{{ end }}
+<meta property="og:locale" content="zh_CN">
+{{- if .IsPage }}
+<meta property="article:author" content="{{ .Site.Params.author }}">
+<meta property="article:published_time" content="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
+{{- with .Lastmod }}<meta property="article:modified_time" content="{{ .Format "2006-01-02T15:04:05Z07:00" }}">{{ end }}
+{{- range .Params.categories }}<meta property="article:section" content="{{ . }}">{{ end }}
+{{- range .Params.tags }}<meta property="article:tag" content="{{ . }}">{{ end }}
+{{- end }}
+{{- with .Params.cover }}
+<meta property="og:image" content="{{ . | absURL }}">
+<meta property="og:image:alt" content="{{ $.Title }}">
+{{- else }}
+<meta property="og:image" content="{{ "images/logo.png" | absURL }}">
+{{- end }}
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ .Title }}">
+<meta name="twitter:description" content="{{ $description }}">
+{{- with .Params.cover }}
+<meta name="twitter:image" content="{{ . | absURL }}">
+{{- else }}
+<meta name="twitter:image" content="{{ "images/logo.png" | absURL }}">
+{{- end }}
 
 <!-- RSS -->
 {{ range .AlternativeOutputFormats -}}
   {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
 {{ end -}}
 
+<!-- Structured Data -->
+{{- partial "schema.html" . -}}
+
 <!-- Preconnect -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
 
 <link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
