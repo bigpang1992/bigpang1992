@@ -1,0 +1,39 @@
+{{ define "main" }}
+
+<!-- Page Header -->
+<section class="page-header">
+  <div class="page-header-bg"></div>
+  <div class="container">
+    <div class="page-header-content">
+      <h1 class="page-title gradient-text">{{ .Title }}</h1>
+      <p class="page-desc">{{ .Description }}</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="tools-grid">
+      {{ range .Pages }}
+      <a href="{{ .RelPermalink }}" class="tool-card glass-card" data-scroll-reveal>
+        <div class="tool-card-icon">{{ .Params.icon | default "🔧" }}</div>
+        <div class="tool-card-body">
+          <h3 class="tool-card-title">{{ .Title }}</h3>
+          <p class="tool-card-desc">{{ .Description }}</p>
+        </div>
+        <div class="tool-card-category">{{ .Params.toolCategory | default "工具" }}</div>
+        <div class="tool-card-arrow">→</div>
+      </a>
+      {{ end }}
+    </div>
+
+    {{ if eq (len .Pages) 0 }}
+    <div class="tools-empty" data-scroll-reveal>
+      <span class="tools-empty-icon">🚧</span>
+      <p>工具正在开发中，敬请期待...</p>
+    </div>
+    {{ end }}
+  </div>
+</section>
+
+{{ end }}

@@ -88,6 +88,38 @@
   </div>
 </section>
 
+<!-- Online Tools -->
+{{ $tools := .Site.GetPage "tools" }}
+{{ with $tools }}
+{{ if .Pages }}
+<section class="section tools-home-section">
+  <div class="container">
+    <div class="section-header" data-scroll-reveal>
+      <span class="section-badge">🛠️ TOOLS</span>
+      <h2 class="section-title gradient-text">在线工具</h2>
+      <p class="section-desc">实用小工具，免费在线使用</p>
+    </div>
+    <div class="tools-grid" data-scroll-reveal>
+      {{ range .Pages }}
+      <a href="{{ .RelPermalink }}" class="tool-card glass-card">
+        <div class="tool-card-icon">{{ .Params.icon | default "🔧" }}</div>
+        <div class="tool-card-body">
+          <h3 class="tool-card-title">{{ .Title }}</h3>
+          <p class="tool-card-desc">{{ .Description }}</p>
+        </div>
+        <div class="tool-card-category">{{ .Params.toolCategory | default "工具" }}</div>
+        <div class="tool-card-arrow">→</div>
+      </a>
+      {{ end }}
+    </div>
+    <div class="section-more" data-scroll-reveal>
+      <a href="{{ .RelPermalink }}" class="btn btn-outline">查看全部工具 →</a>
+    </div>
+  </div>
+</section>
+{{ end }}
+{{ end }}
+
 <!-- Donation CTA -->
 <section class="section donate-section">
   <div class="container">

@@ -111,10 +111,14 @@ summaryLength = 80
     url = "/categories/"
     weight = 3
   [[menu.main]]
+    name = "�️ 工具"
+    url = "/tools/"
+    weight = 4
+  [[menu.main]]
     name = "💰 打赏"
     url = "/donate/"
-    weight = 4
+    weight = 5
   [[menu.main]]
     name = "👤 关于"
     url = "/about/"
-    weight = 5
+    weight = 6
