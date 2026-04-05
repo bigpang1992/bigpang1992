@@ -1,21 +1,20 @@
 {{ define "main" }}
 
-<section class="relative pt-28 pb-16 overflow-hidden">
-  <div class="absolute inset-0 bg-gradient-to-b from-cyber/[0.03] to-transparent"></div>
-  <div class="relative max-w-[1200px] mx-auto px-5 text-center">
-    <h1 class="text-3xl md:text-4xl font-black gradient-text mb-3">{{ .Title }}</h1>
-    <p class="text-slate-400">共 {{ len .Data.Terms }} 个{{ if eq .Data.Plural "categories" }}分类{{ else }}标签{{ end }}</p>
+<section class="relative pt-28 pb-20 overflow-hidden">
+  <div class="absolute inset-0 bg-gradient-to-b from-neon-violet/[0.04] via-cyber/[0.02] to-transparent"></div>
+  <div class="relative max-w-[1200px] mx-auto px-6 text-center">
+    <h1 class="text-4xl md:text-5xl font-black gradient-text mb-4">{{ .Title }}</h1>
+    <p class="text-slate-500 text-lg">共 {{ len .Data.Terms }} 个{{ if eq .Data.Plural "categories" }}分类{{ else }}标签{{ end }}</p>
   </div>
 </section>
 
-<section class="pb-20 relative z-10">
-  <div class="max-w-[1200px] mx-auto px-5">
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+<section class="pb-24 relative z-10">
+  <div class="max-w-[1200px] mx-auto px-6">
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5">
       {{ range .Data.Terms.Alphabetical }}
-      <a href="{{ .Page.RelPermalink }}" class="group relative rounded-2xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-xl p-6 text-center hover:border-cyber/30 hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(0,212,255,0.08)] transition-all duration-300" data-scroll-reveal>
-        <h3 class="text-white font-bold text-base mb-1 group-hover:text-cyber transition-colors">{{ .Page.Title }}</h3>
-        <span class="text-xs text-slate-500">{{ .Count }} 篇文章</span>
-        <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-cyber/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+      <a href="{{ .Page.RelPermalink }}" class="cat-card group relative rounded-2xl bg-gradient-to-b from-white/[0.04] to-white/[0.01] border border-white/[0.07] backdrop-blur-xl p-7 text-center" style="--glow-color: rgba(0,212,255,0.12)" data-scroll-reveal>
+        <h3 class="text-white font-bold text-base mb-2 group-hover:text-cyber transition-colors duration-300">{{ .Page.Title }}</h3>
+        <span class="text-sm text-slate-500 font-mono">{{ .Count }} 篇文章</span>
       </a>
       {{ end }}
     </div>

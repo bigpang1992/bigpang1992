@@ -3,81 +3,83 @@
 <!-- Post Header -->
 <section class="post-header relative overflow-hidden">
   <div class="post-header-bg absolute inset-0 bg-cover bg-center" {{ with .Params.cover }}style="background-image: url('{{ . }}')"{{ end }}>
-    <div class="post-header-overlay absolute inset-0 bg-gradient-to-t from-dark via-dark/80 to-dark/40 flex items-end">
-      <div class="max-w-[1200px] mx-auto px-5 w-full pb-12 pt-32">
-        <div class="flex flex-wrap gap-2 mb-4">
+    <div class="post-header-overlay">
+      <div class="max-w-[1200px] mx-auto px-6 w-full pb-14 pt-36">
+        <div class="flex flex-wrap gap-2 mb-5">
           {{ range .Params.categories }}
-          <a href="{{ "categories/" | relURL }}{{ . | urlize }}/" class="text-xs font-semibold px-3 py-1 rounded-full bg-cyber/15 text-cyber border border-cyber/20 hover:bg-cyber/25 transition-all">{{ . }}</a>
+          <a href="{{ "categories/" | relURL }}{{ . | urlize }}/" class="text-xs font-semibold px-4 py-1.5 rounded-full bg-cyber/15 text-cyber border border-cyber/20 hover:bg-cyber/25 backdrop-blur-md transition-all">{{ . }}</a>
           {{ end }}
         </div>
-        <h1 class="text-2xl sm:text-3xl md:text-4xl font-black text-white leading-tight mb-4">{{ .Title }}</h1>
-        <div class="flex flex-wrap gap-x-5 gap-y-1 text-sm text-slate-400">
-          <span>📅 {{ .Date.Format "2006年01月02日" }}</span>
-          <span>⏱ {{ .ReadingTime }} 分钟阅读</span>
+        <h1 class="text-2xl sm:text-3xl md:text-4xl font-black text-white leading-tight mb-5">{{ .Title }}</h1>
+        <div class="flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate-400">
+          <span class="flex items-center gap-1.5">📅 {{ .Date.Format "2006年01月02日" }}</span>
+          <span class="flex items-center gap-1.5">⏱ {{ .ReadingTime }} 分钟阅读</span>
           {{ with .Params.tags }}
-          <span>🏷️ {{ delimit . ", " }}</span>
+          <span class="flex items-center gap-1.5">🏷️ {{ delimit . ", " }}</span>
           {{ end }}
         </div>
       </div>
     </div>
   </div>
-  <!-- spacer -->
-  <div class="h-[340px] sm:h-[380px]"></div>
+  <div class="h-[360px] sm:h-[400px]"></div>
 </section>
 
-<section class="py-12 relative z-10">
-  <div class="max-w-[1200px] mx-auto px-5">
-    <div class="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-8 items-start">
+<section class="py-14 relative z-10">
+  <div class="max-w-[1200px] mx-auto px-6">
+    <div class="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-10 items-start">
       <!-- Main Content -->
       <article>
         {{ partial "ad-spot.html" (dict "Site" .Site "position" "article-top") }}
 
-        <div class="markdown-body rounded-2xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-xl p-6 md:p-10">
+        <div class="markdown-body glass-card p-8 md:p-12">
           {{ .Content }}
         </div>
 
         {{ partial "ad-spot.html" (dict "Site" .Site "position" "article-bottom") }}
 
         <!-- Post Donate CTA -->
-        <div class="rounded-2xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-xl p-8 text-center mt-8" data-scroll-reveal>
-          <div class="text-4xl mb-3">🙏</div>
-          <h3 class="text-lg font-bold text-white mb-2">喜欢这篇文章？</h3>
-          <p class="text-slate-400 text-sm mb-5" id="post-flattery">您的打赏是我最大的动力！</p>
-          <button class="btn-donate-trigger inline-flex items-center gap-2 px-7 py-3 rounded-full font-bold text-sm text-white bg-gradient-to-r from-neon-pink to-neon-gold shadow-[0_0_20px_rgba(255,0,110,0.25)] hover:shadow-[0_0_30px_rgba(255,0,110,0.4)] hover:-translate-y-0.5 transition-all">💰 打赏作者</button>
+        <div class="glass-card p-10 text-center mt-10" data-scroll-reveal>
+          <div class="text-5xl mb-4">🙏</div>
+          <h3 class="text-xl font-bold text-white mb-3">喜欢这篇文章？</h3>
+          <p class="text-slate-500 text-sm mb-6" id="post-flattery">您的打赏是我最大的动力！</p>
+          <button class="btn-donate-trigger inline-flex items-center gap-2 px-8 py-3.5 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-neon-pink to-neon-gold shadow-[0_0_25px_rgba(255,0,110,0.25)] hover:shadow-[0_0_40px_rgba(255,0,110,0.4)] hover:-translate-y-1 transition-all duration-400">💰 打赏作者</button>
         </div>
 
         <!-- Tags -->
         {{ with .Params.tags }}
-        <div class="flex flex-wrap items-center gap-2 mt-8" data-scroll-reveal>
-          <span class="text-sm text-slate-500 mr-1">🏷️ 标签：</span>
+        <div class="flex flex-wrap items-center gap-2 mt-10" data-scroll-reveal>
+          <span class="text-sm text-slate-600 mr-2">🏷️ 标签：</span>
           {{ range . }}
-          <a href="{{ "tags/" | relURL }}{{ . | urlize }}/" class="text-xs px-3 py-1.5 rounded-full bg-white/5 border border-white/[0.08] text-slate-400 hover:text-cyber hover:border-cyber/30 hover:bg-cyber/5 transition-all">#{{ . }}</a>
+          <a href="{{ "tags/" | relURL }}{{ . | urlize }}/" class="text-xs px-3.5 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.06] text-slate-500 hover:text-cyber hover:border-cyber/20 hover:bg-cyber/[0.04] tag-glow transition-all duration-300">#{{ . }}</a>
           {{ end }}
         </div>
         {{ end }}
 
         <!-- Prev/Next -->
-        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-10" data-scroll-reveal>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-12" data-scroll-reveal>
           {{ with .PrevInSection }}
-          <a href="{{ .RelPermalink }}" class="group rounded-2xl bg-white/[0.03] border border-white/[0.08] p-5 hover:border-cyber/30 hover:-translate-y-0.5 transition-all">
-            <span class="text-xs text-slate-500 group-hover:text-cyber transition-colors">← 上一篇</span>
-            <span class="block text-sm text-slate-300 mt-1 line-clamp-2 group-hover:text-white transition-colors">{{ .Title }}</span>
+          <a href="{{ .RelPermalink }}" class="group glass-card p-6">
+            <span class="text-xs text-slate-600 group-hover:text-cyber transition-colors flex items-center gap-1">← 上一篇</span>
+            <span class="block text-sm text-slate-300 mt-2 line-clamp-2 group-hover:text-white transition-colors">{{ .Title }}</span>
           </a>
           {{ end }}
           {{ with .NextInSection }}
-          <a href="{{ .RelPermalink }}" class="group rounded-2xl bg-white/[0.03] border border-white/[0.08] p-5 hover:border-cyber/30 hover:-translate-y-0.5 transition-all text-right sm:col-start-2">
-            <span class="text-xs text-slate-500 group-hover:text-cyber transition-colors">下一篇 →</span>
-            <span class="block text-sm text-slate-300 mt-1 line-clamp-2 group-hover:text-white transition-colors">{{ .Title }}</span>
+          <a href="{{ .RelPermalink }}" class="group glass-card p-6 text-right sm:col-start-2">
+            <span class="text-xs text-slate-600 group-hover:text-cyber transition-colors flex items-center justify-end gap-1">下一篇 →</span>
+            <span class="block text-sm text-slate-300 mt-2 line-clamp-2 group-hover:text-white transition-colors">{{ .Title }}</span>
           </a>
           {{ end }}
         </nav>
       </article>
 
       <!-- Sidebar -->
-      <aside class="flex flex-col gap-5">
+      <aside class="flex flex-col gap-6">
         {{ if .TableOfContents }}
-        <div class="toc-widget rounded-2xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-xl p-5 sticky top-24">
-          <h4 class="text-white font-bold text-sm mb-4">📑 目录</h4>
+        <div class="toc-widget glass-card p-6 sticky top-24">
+          <h4 class="text-white font-bold text-sm mb-5 flex items-center gap-2">
+            <span class="w-6 h-px bg-gradient-to-r from-cyber to-transparent"></span>
+            📑 目录
+          </h4>
           <div class="toc-content text-sm">
             {{ .TableOfContents }}
           </div>

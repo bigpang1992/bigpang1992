@@ -1,29 +1,43 @@
 <article class="group" data-scroll-reveal itemscope itemtype="https://schema.org/BlogPosting">
-  <a href="{{ .RelPermalink }}" class="block rounded-2xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-xl overflow-hidden hover:border-cyber/30 hover:-translate-y-1.5 hover:shadow-[0_8px_40px_rgba(0,212,255,0.08)] transition-all duration-300" aria-label="阅读：{{ .Title }}">
+  <a href="{{ .RelPermalink }}" class="glass-card block relative" aria-label="阅读：{{ .Title }}">
+    <!-- Top accent bar -->
+    <div class="card-accent-bar"></div>
+
     <!-- Cover -->
-    <div class="relative h-48 overflow-hidden">
+    <div class="relative h-52 overflow-hidden rounded-t-[20px]">
       {{ with .Params.cover }}
-      <img src="{{ . }}" alt="{{ $.Title }}" loading="lazy" itemprop="image" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+      <img src="{{ . }}" alt="{{ $.Title }}" loading="lazy" itemprop="image" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
       {{ else }}
-      <div class="w-full h-full bg-gradient-to-br from-dark-alt to-dark flex items-center justify-center">
-        <span class="text-5xl opacity-30">📝</span>
+      <div class="w-full h-full bg-gradient-to-br from-[#0c0c20] to-[#07070f] flex items-center justify-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-cyber/[0.06] to-neon-violet/[0.04]"></div>
+        <span class="text-5xl opacity-20 group-hover:opacity-40 group-hover:scale-110 transition-all duration-500">📝</span>
       </div>
       {{ end }}
-      <div class="absolute inset-0 bg-gradient-to-t from-dark via-transparent to-transparent opacity-60"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-[#07070f] via-[#07070f]/40 to-transparent"></div>
+      <!-- Category badge on image -->
+      {{ range first 1 .Params.categories }}
+      <span class="absolute top-4 left-4 text-[10px] px-3 py-1 rounded-full bg-cyber/20 text-cyber border border-cyber/20 font-semibold backdrop-blur-md uppercase tracking-wider" itemprop="articleSection">{{ . }}</span>
+      {{ end }}
     </div>
+
     <!-- Body -->
-    <div class="p-5">
+    <div class="p-6">
       <div class="flex items-center gap-3 mb-3">
-        <time class="text-xs text-slate-500 font-mono" datetime="{{ .Date.Format "2006-01-02" }}" itemprop="datePublished">{{ .Date.Format "2006-01-02" }}</time>
-        {{ range first 1 .Params.categories }}
-        <span class="text-xs px-2 py-0.5 rounded bg-cyber/10 text-cyber font-medium" itemprop="articleSection">{{ . }}</span>
-        {{ end }}
+        <time class="text-xs text-slate-600 font-mono tracking-wider" datetime="{{ .Date.Format "2006-01-02" }}" itemprop="datePublished">{{ .Date.Format "2006.01.02" }}</time>
+        <span class="text-slate-700">·</span>
+        <span class="text-xs text-slate-600">⏱ {{ .ReadingTime }} min</span>
       </div>
-      <h3 class="text-white font-bold text-[15px] leading-snug mb-2 line-clamp-2 group-hover:text-cyber transition-colors" itemprop="headline">{{ .Title }}</h3>
-      <p class="text-slate-400 text-sm leading-relaxed line-clamp-2 mb-4" itemprop="description">{{ .Summary | plainify | truncate 120 }}</p>
-      <div class="flex items-center justify-between text-xs text-slate-500">
-        <span>⏱ {{ .ReadingTime }} 分钟</span>
-        <span class="text-cyber/60 group-hover:text-cyber transition-colors">阅读更多 →</span>
+      <h3 class="text-white font-bold text-[16px] leading-snug mb-3 line-clamp-2 group-hover:text-cyber transition-colors duration-300" itemprop="headline">{{ .Title }}</h3>
+      <p class="text-slate-500 text-sm leading-relaxed line-clamp-2 mb-5" itemprop="description">{{ .Summary | plainify | truncate 100 }}</p>
+      <div class="flex items-center justify-between">
+        <div class="flex gap-1.5">
+          {{ range first 2 .Params.tags }}
+          <span class="text-[10px] px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.06] text-slate-500 tag-glow transition-all">#{{ . }}</span>
+          {{ end }}
+        </div>
+        <span class="text-xs text-slate-600 group-hover:text-cyber transition-all duration-300 flex items-center gap-1">
+          阅读 <span class="group-hover:translate-x-1 transition-transform duration-300">→</span>
+        </span>
       </div>
     </div>
   </a>

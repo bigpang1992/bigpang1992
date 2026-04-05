@@ -1,25 +1,30 @@
 {{ define "main" }}
 
 <!-- Page Header -->
-<section class="relative pt-28 pb-16 overflow-hidden">
-  <div class="absolute inset-0 bg-gradient-to-b from-cyber/[0.03] to-transparent"></div>
-  <div class="relative max-w-[1200px] mx-auto px-5 text-center">
-    <h1 class="text-3xl md:text-4xl font-black gradient-text mb-3">{{ .Title }}</h1>
+<section class="relative pt-28 pb-20 overflow-hidden">
+  <div class="absolute inset-0">
+    <div class="absolute inset-0 bg-gradient-to-b from-cyber/[0.04] via-neon-violet/[0.02] to-transparent"></div>
+  </div>
+  <div class="relative max-w-[1200px] mx-auto px-6 text-center">
+    <h1 class="text-4xl md:text-5xl font-black gradient-text mb-4">{{ .Title }}</h1>
     {{ with .Description }}
-    <p class="text-slate-400">{{ . }}</p>
+    <p class="text-slate-500 text-lg">{{ . }}</p>
     {{ end }}
     {{ if .IsSection }}
-    <span class="inline-block mt-3 text-sm text-slate-500 bg-white/5 px-4 py-1 rounded-full">共 {{ len .Pages }} 篇文章</span>
+    <span class="inline-flex items-center gap-2 mt-5 text-sm text-slate-500 bg-white/[0.04] border border-white/[0.06] px-5 py-2 rounded-full backdrop-blur-md font-mono">
+      <span class="w-1.5 h-1.5 rounded-full bg-cyber"></span>
+      共 {{ len .Pages }} 篇文章
+    </span>
     {{ end }}
   </div>
 </section>
 
-<section class="pb-20 relative z-10">
-  <div class="max-w-[1200px] mx-auto px-5">
-    <div class="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8 items-start">
+<section class="pb-24 relative z-10">
+  <div class="max-w-[1200px] mx-auto px-6">
+    <div class="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-10 items-start">
       <!-- Main -->
       <div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-7">
           {{ range .Paginator.Pages }}
             {{ partial "article-card.html" . }}
           {{ end }}
@@ -27,31 +32,34 @@
 
         <!-- Pagination -->
         {{ if gt .Paginator.TotalPages 1 }}
-        <nav class="flex items-center justify-center gap-4 mt-12" data-scroll-reveal>
+        <nav class="flex items-center justify-center gap-4 mt-14" data-scroll-reveal>
           {{ if .Paginator.HasPrev }}
-          <a href="{{ .Paginator.Prev.URL }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm border border-white/10 text-slate-300 hover:border-cyber/40 hover:text-cyber transition-all">← 上一页</a>
+          <a href="{{ .Paginator.Prev.URL }}" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm border border-white/[0.08] text-slate-400 hover:border-cyber/30 hover:text-cyber hover:bg-cyber/[0.04] transition-all duration-300">← 上一页</a>
           {{ end }}
-          <span class="text-sm text-slate-500 font-mono">{{ .Paginator.PageNumber }} / {{ .Paginator.TotalPages }}</span>
+          <span class="text-sm text-slate-600 font-mono px-4">{{ .Paginator.PageNumber }} / {{ .Paginator.TotalPages }}</span>
           {{ if .Paginator.HasNext }}
-          <a href="{{ .Paginator.Next.URL }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm border border-white/10 text-slate-300 hover:border-cyber/40 hover:text-cyber transition-all">下一页 →</a>
+          <a href="{{ .Paginator.Next.URL }}" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm border border-white/[0.08] text-slate-400 hover:border-cyber/30 hover:text-cyber hover:bg-cyber/[0.04] transition-all duration-300">下一页 →</a>
           {{ end }}
         </nav>
         {{ end }}
       </div>
 
       <!-- Sidebar -->
-      <aside class="flex flex-col gap-5 lg:order-none order-first">
+      <aside class="flex flex-col gap-6 lg:order-none order-first">
         {{ partial "ad-spot.html" (dict "Site" .Site "position" "sidebar") }}
 
         {{ if .Site.Taxonomies.categories }}
-        <div class="rounded-2xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-xl p-5" data-scroll-reveal>
-          <h4 class="text-white font-bold text-sm mb-4">📂 文章分类</h4>
-          <ul class="space-y-1.5">
+        <div class="glass-card p-6" data-scroll-reveal>
+          <h4 class="text-white font-bold text-sm mb-5 flex items-center gap-2">
+            <span class="w-6 h-px bg-gradient-to-r from-cyber to-transparent"></span>
+            📂 文章分类
+          </h4>
+          <ul class="space-y-1">
             {{ range .Site.Taxonomies.categories }}
             <li>
-              <a href="{{ .Page.RelPermalink }}" class="flex items-center justify-between px-3 py-2 rounded-lg text-sm text-slate-400 hover:text-cyber hover:bg-cyber/5 transition-all">
+              <a href="{{ .Page.RelPermalink }}" class="flex items-center justify-between px-4 py-2.5 rounded-xl text-sm text-slate-500 hover:text-cyber hover:bg-cyber/[0.04] transition-all duration-300">
                 <span>{{ .Page.Title }}</span>
-                <span class="text-xs px-2 py-0.5 rounded-full bg-white/5 text-slate-500">{{ .Count }}</span>
+                <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-white/[0.04] border border-white/[0.06] text-slate-600 font-mono">{{ .Count }}</span>
               </a>
             </li>
             {{ end }}
@@ -60,11 +68,14 @@
         {{ end }}
 
         {{ if .Site.Taxonomies.tags }}
-        <div class="rounded-2xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-xl p-5" data-scroll-reveal>
-          <h4 class="text-white font-bold text-sm mb-4">🏷️ 标签云</h4>
+        <div class="glass-card p-6" data-scroll-reveal>
+          <h4 class="text-white font-bold text-sm mb-5 flex items-center gap-2">
+            <span class="w-6 h-px bg-gradient-to-r from-neon-violet to-transparent"></span>
+            🏷️ 标签云
+          </h4>
           <div class="flex flex-wrap gap-2">
             {{ range .Site.Taxonomies.tags }}
-            <a href="{{ .Page.RelPermalink }}" class="text-xs px-3 py-1.5 rounded-full bg-white/5 border border-white/[0.08] text-slate-400 hover:text-cyber hover:border-cyber/30 hover:bg-cyber/5 transition-all">{{ .Page.Title }} ({{ .Count }})</a>
+            <a href="{{ .Page.RelPermalink }}" class="text-xs px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.06] text-slate-500 hover:text-cyber hover:border-cyber/20 hover:bg-cyber/[0.04] tag-glow transition-all duration-300">{{ .Page.Title }} <span class="text-slate-700">({{ .Count }})</span></a>
             {{ end }}
           </div>
         </div>

@@ -3,7 +3,7 @@
 <head>
   {{- partial "head.html" . -}}
 </head>
-<body class="bg-dark text-slate-300 font-body leading-relaxed overflow-x-hidden min-h-screen antialiased">
+<body class="bg-[#07070f] text-slate-300 font-body leading-relaxed overflow-x-hidden min-h-screen antialiased">
   <!-- Loading Screen -->
   <div id="loading-screen" class="loading-screen">
     <div class="loader">
@@ -12,6 +12,13 @@
       <div class="loader-bar"><div class="loader-progress"></div></div>
     </div>
   </div>
+
+  <!-- Animated Mesh Gradient Background -->
+  <div class="mesh-gradient"></div>
+  <div class="mesh-orb-pink"></div>
+
+  <!-- Cyber Grid Overlay -->
+  <div class="cyber-grid"></div>
 
   <!-- Particle Background -->
   <canvas id="particles-canvas"></canvas>
