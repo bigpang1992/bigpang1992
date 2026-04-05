@@ -111,7 +111,7 @@ summaryLength = 80
     url = "/categories/"
     weight = 3
   [[menu.main]]
-    name = "�️ 工具"
+    name = "🛠️ 工具"
     url = "/tools/"
     weight = 4
   [[menu.main]]
