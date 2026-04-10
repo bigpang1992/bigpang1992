@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>教程 on 穷Hub</title><link>https://bigpang1992.github.io/tags/%E6%95%99%E7%A8%8B/</link><description>Recent content in 教程 on 穷Hub</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Mon, 30 Mar 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://bigpang1992.github.io/tags/%E6%95%99%E7%A8%8B/index.xml" rel="self" type="application/rss+xml"/><item><title>本地部署DeepSeek，我的电脑差点起飞</title><link>https://bigpang1992.github.io/posts/local-deploy-deepseek/</link><pubDate>Mon, 30 Mar 2026 00:00:00 +0000</pubDate><guid>https://bigpang1992.github.io/posts/local-deploy-deepseek/</guid><description>&lt;p&gt;一直想在本地跑一个大模型，不用联网不怕审查不花钱。上周终于动手了，选了 DeepSeek-V3 的量化版，用 Ollama 部署。&lt;/p&gt;
 &lt;p&gt;记录一下全过程，给同样想折腾的兄弟省点时间。&lt;/p&gt;
+&lt;p&gt;先声明：这篇文章的内容基于我的个人硬件和网络环境，不同配置可能体验差异很大。但踩过的坑应该是通用的。&lt;/p&gt;
+&lt;h2 id="为什么选deepseek"&gt;为什么选DeepSeek&lt;/h2&gt;
+&lt;p&gt;市面上可以本地部署的开源模型挺多的——Llama 3.x系列、Mistral、Qwen……我最后选DeepSeek-V3主要是三个原因：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;中文能力强&lt;/strong&gt;：DeepSeek在中文理解和生成方面做得很好，中文场景下的表现比同参数量的Llama强不少&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;国产模型加buff&lt;/strong&gt;：说实话有点情怀在——支持国产AI嘛&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;社区活跃&lt;/strong&gt;：Ollama对DeepSeek的支持很完善，网上教程也多&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;当然也有考虑过Qwen2.5（阿里的），中文也很强。但DeepSeek的量化版在我这个显存配置下表现更稳定。&lt;/p&gt;
 &lt;h2 id="我的配置"&gt;我的配置&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;CPU：i7-13700K&lt;/li&gt;
 &lt;li&gt;内存：32GB DDR5&lt;/li&gt;
 &lt;li&gt;显卡：RTX 4070Ti 12GB&lt;/li&gt;
 &lt;li&gt;系统：Windows 11&lt;/li&gt;
+&lt;li&gt;硬盘：M.2 NVMe SSD（模型文件加载速度跟硬盘有关系）&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;先说结论——这个配置跑 DeepSeek 的 7B 量化版完全没问题，跑 32B 就很勉强了。&lt;/p&gt;
+&lt;p&gt;先说结论——这个配置跑 DeepSeek 的 7B 量化版完全没问题，跑 32B 就很勉强了。具体对比后面会说。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;最低配置参考&lt;/strong&gt;：如果你的显卡只有8GB显存，跑7B的Q4量化版也是可以的，只是速度会慢一些。如果是集显或者4GB以下的显卡，那就只能CPU推理了，速度会慢很多（大概5-10 token/s），日常聊天勉强能用但等得难受。&lt;/p&gt;
 &lt;h2 id="安装步骤"&gt;安装步骤&lt;/h2&gt;
 &lt;h3 id="第一步装-ollama"&gt;第一步：装 Ollama&lt;/h3&gt;
-&lt;p&gt;直接去 &lt;a href="https://ollama.com"&gt;ollama.com&lt;/a&gt; 下载安装包，一路 Next 就行。装完在终端输入 &lt;code&gt;ollama --version&lt;/code&gt; 确认一下。&lt;/p&gt;
+&lt;p&gt;直接去 &lt;a href="https://ollama.com"&gt;ollama.com&lt;/a&gt; 下载安装包。Windows版就是一个exe，一路 Next 就行。装完在终端输入 &lt;code&gt;ollama --version&lt;/code&gt; 确认一下。&lt;/p&gt;
+&lt;p&gt;Ollama本质上是一个大模型的管理工具——它帮你处理模型下载、量化、推理等一系列繁琐的事情，让你不用自己折腾Python环境和各种依赖。可以理解为大模型界的Docker。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Tips&lt;/strong&gt;：装完之后Ollama会在系统托盘里常驻运行。如果你不想让它一直后台跑，可以在托盘图标右键退出。下次要用的时候手动启动就行。&lt;/p&gt;
 &lt;h3 id="第二步拉模型"&gt;第二步：拉模型&lt;/h3&gt;
 &lt;div class="highlight"&gt;&lt;div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;
 &lt;table style="border-spacing:0;padding:0;margin:0;border:0;"&gt;&lt;tr&gt;&lt;td style="vertical-align:top;padding:0;margin:0;border:0;"&gt;
@@ -21,6 +34,14 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;7B 的 Q4 量化版大概 4GB 左右，我的网速下载了十来分钟。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;关于量化等级的科普&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Q4&lt;/strong&gt;（4-bit量化）：体积最小、速度最快，但精度有一定损失&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Q5&lt;/strong&gt;：精度和体积的折中，推荐选项&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Q8&lt;/strong&gt;（8-bit量化）：精度接近原版，但体积翻倍，对显存要求更高&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;FP16&lt;/strong&gt;（半精度）：基本无损，但7B就需要14GB显存，一般消费显卡跑不起&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;对于日常使用来说，Q4就够了。如果你显存充裕（16GB以上），可以试试Q5或Q8。&lt;/p&gt;
 &lt;h3 id="第三步跑起来"&gt;第三步：跑起来&lt;/h3&gt;
 &lt;div class="highlight"&gt;&lt;div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;
 &lt;table style="border-spacing:0;padding:0;margin:0;border:0;"&gt;&lt;tr&gt;&lt;td style="vertical-align:top;padding:0;margin:0;border:0;"&gt;
@@ -30,18 +51,7 @@
 &lt;pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ollama run deepseek-v3:7b-q4
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;到这一步就能聊了。输入中文直接对话，体验跟用网页版差不多。&lt;/p&gt;
-&lt;h3 id="第四步可选装个前端"&gt;第四步（可选）：装个前端&lt;/h3&gt;
-&lt;p&gt;光在终端里聊天也太极客了，装个好看点的前端界面。我用的 Open WebUI：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;
-&lt;table style="border-spacing:0;padding:0;margin:0;border:0;"&gt;&lt;tr&gt;&lt;td style="vertical-align:top;padding:0;margin:0;border:0;"&gt;
-&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code&gt;&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%"&gt;
-&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;docker run -d -p 3000:8080 --add-host&lt;span style="color:#ff79c6"&gt;=&lt;/span&gt;host.docker.internal:host-gateway ghcr.io/open-webui/open-webui:main
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;打开 &lt;code&gt;localhost:3000&lt;/code&gt; 就能看到一个类 ChatGPT 的界面了。&lt;/p&gt;
-&lt;h2 id="踩坑记录"&gt;踩坑记录&lt;/h2&gt;
-&lt;h3 id="坑1显存不够"&gt;坑1：显存不够&lt;/h3&gt;
-&lt;p&gt;我一开始贪心下了 32B 的版本，结果一运行显存直接爆了，系统卡了大概十秒才缓过来。12GB 显存老实跑 7B 吧。&lt;/p&gt;</description></item></channel></rss>
+&lt;/div&gt;&lt;p&gt;到这一步就能聊了。输入中文直接对话，体验跟用网页版差不多（虽然智力上有差距）。&lt;/p&gt;
+&lt;p&gt;终端界面比较极客，但功能够用：直接打字就是对话，输入&lt;code&gt;/bye&lt;/code&gt;退出，输入&lt;code&gt;/help&lt;/code&gt;看更多命令。&lt;/p&gt;
+&lt;h3 id="第四步可选但强烈推荐装个前端"&gt;第四步（可选但强烈推荐）：装个前端&lt;/h3&gt;
+&lt;p&gt;光在终端里聊天也太极客了，装个好看点的前端界面。我用的 Open WebUI：&lt;/p&gt;</description></item></channel></rss>
